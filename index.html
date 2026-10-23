@@ -328,7 +328,15 @@ form.getTextField("dhFormfield-6676099999")
         document.createElement("a");
 
     a.href = url;
-    a.download = "Autorizacion_Bambu.pdf";
+
+const nombreVisitante1 =
+document.getElementById("nombre1").value.trim();
+
+a.download =
+`BAMBU_${nombreVisitante1 || "VISITANTE"}.pdf`;
+
+a.click();
+
 
     a.click();
 }
