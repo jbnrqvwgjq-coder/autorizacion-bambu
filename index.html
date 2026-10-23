@@ -9,56 +9,58 @@
 <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
 
 <style>
+
 body{
-  font-family:Arial,sans-serif;
-  max-width:900px;
-  margin:auto;
-  padding:15px;
-  background:#f5f5f5;
+    font-family:Arial,sans-serif;
+    max-width:900px;
+    margin:auto;
+    padding:15px;
+    background:#f5f5f5;
 }
 
 h2{
-  text-align:center;
+    text-align:center;
 }
 
 h3{
-  background:#e9ecef;
-  padding:10px;
-  border-radius:8px;
+    background:#e9ecef;
+    padding:10px;
+    border-radius:8px;
 }
 
 label{
-  display:block;
-  margin-top:8px;
-  font-weight:bold;
+    display:block;
+    margin-top:8px;
+    font-weight:bold;
 }
 
 input,
 select{
-  width:100%;
-  padding:14px;
-  font-size:16px;
-  margin-bottom:10px;
-  border:1px solid #ccc;
-  border-radius:8px;
-  box-sizing:border-box;
+    width:100%;
+    padding:14px;
+    font-size:16px;
+    margin-bottom:10px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    box-sizing:border-box;
 }
 
 button{
-  width:100%;
-  padding:18px;
-  font-size:18px;
-  font-weight:bold;
-  border:none;
-  border-radius:10px;
-  background:#0066cc;
-  color:white;
-  cursor:pointer;
+    width:100%;
+    padding:18px;
+    font-size:18px;
+    font-weight:bold;
+    border:none;
+    border-radius:10px;
+    background:#0066cc;
+    color:white;
+    cursor:pointer;
 }
 
 hr{
-  margin:25px 0;
+    margin:25px 0;
 }
+
 </style>
 
 </head>
@@ -78,8 +80,8 @@ hr{
 
 <label>Vehículo</label>
 <select id="vehiculo">
-  <option value="SI">Sí</option>
-  <option value="NO">No</option>
+    <option value="SI">Sí</option>
+    <option value="NO">No</option>
 </select>
 
 <label>Placa</label>
@@ -94,9 +96,6 @@ hr{
 
 <label>Identificación</label>
 <input id="identificacion1">
-
-<label>Parentesco</label>
-<input id="parentesco1">
 
 <label>Celular</label>
 <input id="celular1">
@@ -114,15 +113,6 @@ hr{
 <label>Identificación</label>
 <input id="identificacion2">
 
-<label>Parentesco</label>
-<input id="parentesco2">
-
-<label>Celular</label>
-<input id="celular2">
-
-<label>Mascota</label>
-<input id="mascota2">
-
 <hr>
 
 <h3>Visitante 3</h3>
@@ -133,15 +123,6 @@ hr{
 <label>Identificación</label>
 <input id="identificacion3">
 
-<label>Parentesco</label>
-<input id="parentesco3">
-
-<label>Celular</label>
-<input id="celular3">
-
-<label>Mascota</label>
-<input id="mascota3">
-
 <button onclick="generarPDF()">
 Generar PDF
 </button>
@@ -150,131 +131,118 @@ Generar PDF
 
 window.onload = function(){
 
-  const hoy = new Date();
+    const hoy = new Date();
 
-  const fecha =
-    String(hoy.getDate()).padStart(2,'0') + '/' +
-    String(hoy.getMonth()+1).padStart(2,'0') + '/' +
-    hoy.getFullYear();
+    const fecha =
+        String(hoy.getDate()).padStart(2,'0') +
+        '/' +
+        String(hoy.getMonth()+1).padStart(2,'0') +
+        '/' +
+        hoy.getFullYear();
 
-  document.getElementById('fecha').value = fecha;
+    document.getElementById("fecha").value = fecha;
 };
 
 async function generarPDF(){
 
-  const pdfBytes =
-  await fetch("bambu.pdf")
-  .then(r => r.arrayBuffer());
+    const pdfBytes =
+        await fetch("bambu.pdf")
+        .then(r => r.arrayBuffer());
 
-  const pdfDoc =
-  await PDFLib.PDFDocument.load(pdfBytes);
+    const pdfDoc =
+        await PDFLib.PDFDocument.load(pdfBytes);
 
-  const form =
-  pdfDoc.getForm();
+    const form =
+        pdfDoc.getForm();
 
-  // FECHA
-  form.getTextField("dhFormfield-6676099507")
-  .setText(document.getElementById("fecha").value);
+    // FECHA
+    form.getTextField("dhFormfield-6676099507")
+        .setText(document.getElementById("fecha").value);
 
-  // DESDE
-  form.getTextField("dhFormfield-6676099829")
-  .setText(document.getElementById("desde").value);
+    // DESDE
+    form.getTextField("dhFormfield-6676099829")
+        .setText(document.getElementById("desde").value);
 
-  // HASTA
-  form.getTextField("dhFormfield-6676099872")
-  .setText(document.getElementById("hasta").value);
+    // HASTA
+    form.getTextField("dhFormfield-6676099872")
+        .setText(document.getElementById("hasta").value);
 
-  // PLACA
-  form.getTextField("dhFormfield-6676100870")
-  .setText(document.getElementById("placa").value);
+    // PLACA
+    form.getTextField("dhFormfield-6676100870")
+        .setText(document.getElementById("placa").value);
 
-  // VEHICULO
+    // VEHICULO
 
-  const vehiculo =
-  document.getElementById("vehiculo").value;
+    const vehiculo =
+      document.getElementById("vehiculo").value;
 
-  if(vehiculo === "SI"){
+    if(vehiculo === "SI"){
 
-    form.getTextField("dhFormfield-6676100911")
-    .setText("X");
+        form.getTextField("dhFormfield-6676100911")
+            .setText("X");
 
-    form.getTextField("dhFormfield-6676101056")
-    .setText("");
+        form.getTextField("dhFormfield-6676101056")
+            .setText("");
 
-  }else{
+    }else{
 
-    form.getTextField("dhFormfield-6676100911")
-    .setText("");
+        form.getTextField("dhFormfield-6676100911")
+            .setText("");
 
-    form.getTextField("dhFormfield-6676101056")
-    .setText("X");
+        form.getTextField("dhFormfield-6676101056")
+            .setText("X");
 
-  }
+    }
 
-  // VISITANTE 1
+    // VISITANTE 1
 
-  form.getTextField("dhFormfield-6676099881")
-  .setText(document.getElementById("nombre1").value);
+    form.getTextField("dhFormfield-6676099881")
+        .setText(document.getElementById("nombre1").value);
 
-  form.getTextField("dhFormfield-6676099961")
-  .setText(document.getElementById("identificacion1").value);
+    form.getTextField("dhFormfield-6676099961")
+        .setText(document.getElementById("identificacion1").value);
 
-  form.getTextField("dhFormfield-6676100002")
-  .setText(document.getElementById("parentesco1").value);
+    form.getTextField("dhFormfield-6676100201")
+        .setText(document.getElementById("celular1").value);
 
-  form.getTextField("dhFormfield-6676100201")
-  .setText(document.getElementById("celular1").value);
+    form.getTextField("dhFormfield-6676100253")
+        .setText(document.getElementById("mascota1").value);
 
-  form.getTextField("dhFormfield-6676100253")
-  .setText(document.getElementById("mascota1").value);
+    // VISITANTE 2
 
-  // VISITANTE 2
+    form.getTextField("dhFormfield-6676099893")
+        .setText(document.getElementById("nombre2").value);
 
-  form.getTextField("dhFormfield-6676099893")
-  .setText(document.getElementById("nombre2").value);
+    form.getTextField("dhFormfield-6676099978")
+        .setText(document.getElementById("identificacion2").value);
 
-  form.getTextField("dhFormfield-6676099978")
-  .setText(document.getElementById("identificacion2").value);
+    // VISITANTE 3
 
-  form.getTextField("dhFormfield-6676100007")
-  .setText(document.getElementById("parentesco2").value);
+    form.getTextField("dhFormfield-6676099899")
+        .setText(document.getElementById("nombre3").value);
 
-  form.getTextField("dhFormfield-6676100202")
-  .setText(document.getElementById("celular2").value);
+    form.getTextField("dhFormfield-6676099981")
+        .setText(document.getElementById("identificacion3").value);
 
-  // VISITANTE 3
+    const pdfFinal =
+        await pdfDoc.save();
 
-  form.getTextField("dhFormfield-6676099899")
-  .setText(document.getElementById("nombre3").value);
+    const blob =
+        new Blob(
+            [pdfFinal],
+            { type:"application/pdf" }
+        );
 
-  form.getTextField("dhFormfield-6676099981")
-  .setText(document.getElementById("identificacion3").value);
+    const url =
+        URL.createObjectURL(blob);
 
-  form.getTextField("dhFormfield-6676100011")
-  .setText(document.getElementById("parentesco3").value);
+    const a =
+        document.createElement("a");
 
-  form.getTextField("dhFormfield-6676100235")
-  .setText(document.getElementById("celular3").value);
+    a.href = url;
+    a.download = "Autorizacion_Bambu.pdf";
 
-  const pdfFinal =
-  await pdfDoc.save();
-
-  const blob =
-  new Blob(
-    [pdfFinal],
-    {type:"application/pdf"}
-  );
-
-  const url =
-  URL.createObjectURL(blob);
-
-  const a =
-  document.createElement("a");
-
-  a.href = url;
-  a.download = "Autorizacion_Bambu.pdf";
-
-  a.click();
+    a.click();
 }
 
 </script>
