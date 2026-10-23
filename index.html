@@ -9,7 +9,6 @@
 <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
 
 <style>
-
 body{
   font-family:Arial,sans-serif;
   max-width:900px;
@@ -60,7 +59,6 @@ button{
 hr{
   margin:25px 0;
 }
-
 </style>
 
 </head>
@@ -155,112 +153,128 @@ window.onload = function(){
   const hoy = new Date();
 
   const fecha =
-    String(hoy.getDate()).padStart(2,'0')
-    + '/'
-    + String(hoy.getMonth()+1).padStart(2,'0')
-    + '/'
-    + hoy.getFullYear();
+    String(hoy.getDate()).padStart(2,'0') + '/' +
+    String(hoy.getMonth()+1).padStart(2,'0') + '/' +
+    hoy.getFullYear();
 
   document.getElementById('fecha').value = fecha;
-
 };
 
 async function generarPDF(){
 
-const pdfBytes =
-await fetch("bambu.pdf")
-.then(r => r.arrayBuffer());
+  const pdfBytes =
+  await fetch("bambu.pdf")
+  .then(r => r.arrayBuffer());
 
-const pdfDoc =
-await PDFLib.PDFDocument.load(pdfBytes);
+  const pdfDoc =
+  await PDFLib.PDFDocument.load(pdfBytes);
 
-const form =
-pdfDoc.getForm();
+  const form =
+  pdfDoc.getForm();
 
+  // FECHA
+  form.getTextField("dhFormfield-6676099507")
+  .setText(document.getElementById("fecha").value);
 
-// ENCABEZADO
+  // DESDE
+  form.getTextField("dhFormfield-6676099829")
+  .setText(document.getElementById("desde").value);
 
-form.getTextField("dhFormfield-6676099507")
-.setText(document.getElementById("fecha").value);
+  // HASTA
+  form.getTextField("dhFormfield-6676099872")
+  .setText(document.getElementById("hasta").value);
 
-form.getTextField("dhFormfield-6676099829")
-.setText(document.getElementById("desde").value);
+  // PLACA
+  form.getTextField("dhFormfield-6676100870")
+  .setText(document.getElementById("placa").value);
 
-form.getTextField("dhFormfield-6676099872")
-.setText(document.getElementById("hasta").value);
+  // VEHICULO
 
-form.getTextField("dhFormfield-6676100870")
-.setText(document.getElementById("placa").value);
+  const vehiculo =
+  document.getElementById("vehiculo").value;
 
+  if(vehiculo === "SI"){
 
-// VISITANTE 1
+    form.getTextField("dhFormfield-6676100911")
+    .setText("X");
 
-form.getTextField("dhFormfield-6676099881")
-.setText(document.getElementById("nombre1").value);
+    form.getTextField("dhFormfield-6676101056")
+    .setText("");
 
-form.getTextField("dhFormfield-6676099961")
-.setText(document.getElementById("identificacion1").value);
+  }else{
 
-form.getTextField("dhFormfield-6676100002")
-.setText(document.getElementById("parentesco1").value);
+    form.getTextField("dhFormfield-6676100911")
+    .setText("");
 
-form.getTextField("dhFormfield-6676100201")
-.setText(document.getElementById("celular1").value);
+    form.getTextField("dhFormfield-6676101056")
+    .setText("X");
 
-form.getTextField("dhFormfield-6676101056")
-.setText(document.getElementById("mascota1").value);
+  }
 
+  // VISITANTE 1
 
-// VISITANTE 2
+  form.getTextField("dhFormfield-6676099881")
+  .setText(document.getElementById("nombre1").value);
 
-form.getTextField("dhFormfield-6676099893")
-.setText(document.getElementById("nombre2").value);
+  form.getTextField("dhFormfield-6676099961")
+  .setText(document.getElementById("identificacion1").value);
 
-form.getTextField("dhFormfield-6676099978")
-.setText(document.getElementById("identificacion2").value);
+  form.getTextField("dhFormfield-6676100002")
+  .setText(document.getElementById("parentesco1").value);
 
-form.getTextField("dhFormfield-6676100007")
-.setText(document.getElementById("parentesco2").value);
+  form.getTextField("dhFormfield-6676100201")
+  .setText(document.getElementById("celular1").value);
 
-form.getTextField("dhFormfield-6676100202")
-.setText(document.getElementById("celular2").value);
+  form.getTextField("dhFormfield-6676100253")
+  .setText(document.getElementById("mascota1").value);
 
+  // VISITANTE 2
 
-// VISITANTE 3
+  form.getTextField("dhFormfield-6676099893")
+  .setText(document.getElementById("nombre2").value);
 
-form.getTextField("dhFormfield-6676099899")
-.setText(document.getElementById("nombre3").value);
+  form.getTextField("dhFormfield-6676099978")
+  .setText(document.getElementById("identificacion2").value);
 
-form.getTextField("dhFormfield-6676099981")
-.setText(document.getElementById("identificacion3").value);
+  form.getTextField("dhFormfield-6676100007")
+  .setText(document.getElementById("parentesco2").value);
 
-form.getTextField("dhFormfield-6676100011")
-.setText(document.getElementById("parentesco3").value);
+  form.getTextField("dhFormfield-6676100202")
+  .setText(document.getElementById("celular2").value);
 
-form.getTextField("dhFormfield-6676100235")
-.setText(document.getElementById("celular3").value);
+  // VISITANTE 3
 
+  form.getTextField("dhFormfield-6676099899")
+  .setText(document.getElementById("nombre3").value);
 
-const pdfFinal =
-await pdfDoc.save();
+  form.getTextField("dhFormfield-6676099981")
+  .setText(document.getElementById("identificacion3").value);
 
-const blob =
-new Blob(
-[pdfFinal],
-{type:"application/pdf"}
-);
+  form.getTextField("dhFormfield-6676100011")
+  .setText(document.getElementById("parentesco3").value);
 
-const url =
-URL.createObjectURL(blob);
+  form.getTextField("dhFormfield-6676100235")
+  .setText(document.getElementById("celular3").value);
 
-const a =
-document.createElement("a");
+  const pdfFinal =
+  await pdfDoc.save();
 
-a.href = url;
-a.download = "Autorizacion_Bambu.pdf";
+  const blob =
+  new Blob(
+    [pdfFinal],
+    {type:"application/pdf"}
+  );
 
-a.click();
+  const url =
+  URL.createObjectURL(blob);
 
+  const a =
+  document.createElement("a");
+
+  a.href = url;
+  a.download = "Autorizacion_Bambu.pdf";
+
+  a.click();
 }
 
 </script>
