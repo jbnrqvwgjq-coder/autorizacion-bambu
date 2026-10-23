@@ -27,6 +27,7 @@ button {
   color: white;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
 }
 </style>
 
@@ -56,11 +57,23 @@ async function generarPDF() {
     const pdfBytes = await fetch("bambu.pdf")
       .then(r => r.arrayBuffer());
 
-    alert("PDF encontrado correctamente");
+    const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
+
+    const form = pdfDoc.getForm();
+
+    const fields = form.getFields();
+
+    let lista = "";
+
+    fields.forEach(field => {
+      lista += field.getName() + "\n";
+    });
+
+    alert(lista);
 
   } catch (error) {
 
-    alert("No puedo encontrar bambu.pdf");
+    alert("ERROR:\n\n" + error);
 
   }
 
