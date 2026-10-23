@@ -10,7 +10,7 @@
 
 <style>
 body{
-  font-family:Arial;
+  font-family:Arial,sans-serif;
   max-width:800px;
   margin:auto;
   padding:20px;
@@ -30,6 +30,7 @@ button{
   color:white;
   border:none;
   border-radius:5px;
+  font-size:18px;
   cursor:pointer;
 }
 </style>
@@ -41,7 +42,7 @@ button{
 <h2>Autorización Hacienda Peñalisa Bambú</h2>
 
 <label>Fecha</label>
-<input id="fecha">
+<input id="fecha" value="22/10/2026">
 
 <label>Desde</label>
 <input id="desde">
@@ -55,8 +56,14 @@ button{
 <label>Identificación</label>
 <input id="identificacion">
 
+<label>Parentesco</label>
+<input id="parentesco">
+
 <label>Celular</label>
 <input id="celular">
+
+<label>Mascota</label>
+<input id="mascota">
 
 <label>Placa</label>
 <input id="placa">
@@ -69,47 +76,63 @@ Generar PDF
 async function generarPDF(){
 
   const pdfBytes = await fetch("bambu.pdf")
-  .then(r => r.arrayBuffer());
+    .then(r => r.arrayBuffer());
 
   const pdfDoc =
-  await PDFLib.PDFDocument.load(pdfBytes);
+    await PDFLib.PDFDocument.load(pdfBytes);
 
   const form = pdfDoc.getForm();
 
+  // FECHA
   form.getTextField("dhFormfield-6676099507")
-      .setText(document.getElementById("fecha").value);
+    .setText(document.getElementById("fecha").value);
 
+  // DESDE
   form.getTextField("dhFormfield-6676099829")
-      .setText(document.getElementById("desde").value);
+    .setText(document.getElementById("desde").value);
 
+  // HASTA
   form.getTextField("dhFormfield-6676099872")
-      .setText(document.getElementById("hasta").value);
+    .setText(document.getElementById("hasta").value);
 
+  // NOMBRE VISITANTE #1
   form.getTextField("dhFormfield-6676099881")
-      .setText(document.getElementById("nombre").value);
+    .setText(document.getElementById("nombre").value);
 
+  // IDENTIFICACION #1
   form.getTextField("dhFormfield-6676099961")
-      .setText(document.getElementById("identificacion").value);
+    .setText(document.getElementById("identificacion").value);
 
+  // PARENTESCO #1
+  form.getTextField("dhFormfield-6676100002")
+    .setText(document.getElementById("parentesco").value);
+
+  // CELULAR #1
   form.getTextField("dhFormfield-6676100201")
-      .setText(document.getElementById("celular").value);
+    .setText(document.getElementById("celular").value);
 
+  // MASCOTA #1
+  form.getTextField("dhFormfield-6676100253")
+    .setText(document.getElementById("mascota").value);
+
+  // PLACA
   form.getTextField("dhFormfield-6676100870")
-      .setText(document.getElementById("placa").value);
+    .setText(document.getElementById("placa").value);
 
   const pdfFinal = await pdfDoc.save();
 
-  const blob =
-    new Blob([pdfFinal], {type:"application/pdf"});
+  const blob = new Blob(
+    [pdfFinal],
+    { type: "application/pdf" }
+  );
 
-  const url =
-    URL.createObjectURL(blob);
+  const url = URL.createObjectURL(blob);
 
-  const a =
-    document.createElement("a");
+  const a = document.createElement("a");
 
   a.href = url;
   a.download = "Autorizacion.pdf";
+
   a.click();
 }
 </script>
