@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Autorización Bambú</title>
+
+<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+
+<style>
+body{
+  font-family:Arial;
+  max-width:800px;
+  margin:auto;
+  padding:20px;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin-bottom:12px;
+  box-sizing:border-box;
+}
+
+button{
+  width:100%;
+  padding:15px;
+  background:#0066cc;
+  color:white;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>Autorización Hacienda Peñalisa Bambú</h2>
+
+<label>Fecha</label>
+<input id="fecha">
+
+<label>Desde</label>
+<input id="desde">
+
+<label>Hasta</label>
+<input id="hasta">
+
+<label>Nombre visitante</label>
+<input id="nombre">
+
+<label>Identificación</label>
+<input id="identificacion">
+
+<label>Celular</label>
+<input id="celular">
+
+<label>Placa</label>
+<input id="placa">
+
+<button onclick="generarPDF()">
+Generar PDF
+</button>
+
+<script>
+async function generarPDF(){
+
+  const pdfBytes = await fetch("bambu.pdf")
+  .then(r => r.arrayBuffer());
+
+  const pdfDoc =
+  await PDFLib.PDFDocument.load(pdfBytes);
+
+  const form = pdfDoc.getForm();
+
+  form.getTextField("dhFormfield-6676099507")
+      .setText(document.getElementById("fecha").value);
+
+  form.getTextField("dhFormfield-6676099829")
+      .setText(document.getElementById("desde").value);
+
+  form.getTextField("dhFormfield-6676099872")
+      .setText(document.getElementById("hasta").value);
+
+  form.getTextField("dhFormfield-6676099881")
+      .setText(document.getElementById("nombre").value);
+
+  form.getTextField("dhFormfield-6676099961")
+      .setText(document.getElementById("identificacion").value);
+
+  form.getTextField("dhFormfield-6676100201")
+      .setText(document.getElementById("celular").value);
+
+  form.getTextField("dhFormfield-6676100870")
+      .setText(document.getElementById("placa").value);
+
+  const pdfFinal = await pdfDoc.save();
+
+  const blob =
+    new Blob([pdfFinal], {type:"application/pdf"});
+
+  const url =
+    URL.createObjectURL(blob);
+
+  const a =
+    document.createElement("a");
+
+  a.href = url;
+  a.download = "Autorizacion.pdf";
+  a.click();
+}
+</script>
+
+</body>
+</html>
