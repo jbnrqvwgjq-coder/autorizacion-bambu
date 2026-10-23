@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+<script src="https://unpkg.com/pdf-lib"></script><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -15,26 +15,75 @@ body {
 }
 
 input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 12px;
-  box-sizing: border-box;
+  <label>Fecha</label>
+<input id="fecha" type="text">
+
+<label>De</label>
+<input id="de" type="text">
+
+<label>A</label>
+<input id="a" type="text">
+
+<label>Nombre visitante</label>
+<input id="nombre" type="text">
+
+<label>Identificación</label>
+<input id="identificacion" type="text">
+
+<label>Celular</label>
+<input id="celular" type="text">
+
+<label>Mascota</label>
+<input id="mascota" type="text">
+
+<label>Placa</label>
+<input id="placa" type="text">
 }
 
 button {
-  width: 100%;
-  padding: 15px;
-  background: #0066cc;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 18px;
-  cursor: pointer;
+  <button onclick="generarPDF()">
+Generar PDF
+</button>;
 }
 </style>
 
 </head>
-<body>
+<script>
+
+async function generarPDF() {
+
+  const fecha = document.getElementById("fecha").value;
+  const de = document.getElementById("de").value;
+  const a = document.getElementById("a").value;
+  const nombre = document.getElementById("nombre").value;
+  const identificacion = document.getElementById("identificacion").value;
+  const celular = document.getElementById("celular").value;
+  const mascota = document.getElementById("mascota").value;
+  const placa = document.getElementById("placa").value;
+
+  const existingPdfBytes = await fetch("bambu.pdf").then(res =>
+    res.arrayBuffer()
+  );
+
+  const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
+
+  const form = pdfDoc.getForm();
+
+  const fields = form.getFields();
+
+  console.log(
+    fields.map(field => ({
+      name: field.getName()
+    }))
+  );
+
+  alert(
+    "Abre las herramientas del navegador (F12 → Console). Ahí veremos exactamente qué campo corresponde a cada dato."
+  );
+
+}
+
+</script><body>
 
 <h2>Autorización Hacienda Peñalisa Bambú</h2>
 
