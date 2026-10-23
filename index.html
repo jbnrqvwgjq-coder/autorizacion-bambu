@@ -1,12 +1,71 @@
 <!DOCTYPE html>
 <html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Autorización Bambú</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  background: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+</style>
+
+<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+
+</head>
+
 <body>
 
-<h1>PRUEBA</h1>
+<h2>Autorización Hacienda Peñalisa Bambú</h2>
 
-<button onclick="alert('Funciona')">
-Probar
+<label>Fecha</label>
+<input id="fecha">
+
+<label>Nombre visitante</label>
+<input id="nombre">
+
+<button onclick="generarPDF()">
+Generar PDF
 </button>
+
+<script>
+async function generarPDF() {
+
+  try {
+
+    const pdfBytes = await fetch("bambu.pdf")
+      .then(r => r.arrayBuffer());
+
+    alert("PDF encontrado correctamente");
+
+  } catch (error) {
+
+    alert("No puedo encontrar bambu.pdf");
+
+  }
+
+}
+</script>
 
 </body>
 </html>
