@@ -13,7 +13,7 @@
 body{
     font-family:Arial,sans-serif;
     max-width:900px;
-    margin:auto;
+    margin:o;
     padding:15px;
     background:#f5f5f5;
 }
@@ -67,7 +67,21 @@ hr{
 
 <body>
 
-<h2>Autorización Hacienda Peñalisa Bambú</h2>
+<div style="text-align:center;margin-bottom:20px;">
+    <h1 style="
+        color:#2e7d32;
+        margin-bottom:5px;
+    ">
+        HACIENDA PEÑALISA BAMBÚ
+    </h1>
+
+    <div style="
+        color:#666;
+        font-size:14px;
+    ">
+        Generador de Autorizaciones
+    </div>
+</div>
 
 <label>Fecha</label>
 <input id="fecha">
@@ -122,6 +136,46 @@ hr{
 
 <label>Identificación</label>
 <input id="identificacion3">
+
+<hr>
+
+<h3>Visitante 4</h3>
+
+<label>Nombre</label>
+<input id="nombre4">
+
+<label>Identificación</label>
+<input id="identificacion4">
+
+<hr>
+
+<h3>Visitante 5</h3>
+
+<label>Nombre</label>
+<input id="nombre5">
+
+<label>Identificación</label>
+<input id="identificacion5">
+
+<hr>
+
+<h3>Visitante 6</h3>
+
+<label>Nombre</label>
+<input id="nombre6">
+
+<label>Identificación</label>
+<input id="identificacion6">
+
+<hr>
+
+<h3>Visitante 7</h3>
+
+<label>Nombre</label>
+<input id="nombre7">
+
+<label>Identificación</label>
+<input id="identificacion7">
 
 <button onclick="generarPDF()">
 Generar PDF
@@ -223,6 +277,40 @@ async function generarPDF(){
 
     form.getTextField("dhFormfield-6676099981")
         .setText(document.getElementById("identificacion3").value);
+    // VISITANTE 4
+
+form.getTextField("dhFormfield-6676099902")
+.setText(document.getElementById("nombre4").value);
+
+form.getTextField("dhFormfield-6676099983")
+.setText(document.getElementById("identificacion4").value);
+
+
+// VISITANTE 5
+
+form.getTextField("dhFormfield-6676099906")
+.setText(document.getElementById("nombre5").value);
+
+form.getTextField("dhFormfield-6676099991")
+.setText(document.getElementById("identificacion5").value);
+
+
+// VISITANTE 6
+
+form.getTextField("dhFormfield-6676099919")
+.setText(document.getElementById("nombre6").value);
+
+form.getTextField("dhFormfield-6676099994")
+.setText(document.getElementById("identificacion6").value);
+
+
+// VISITANTE 7
+
+form.getTextField("dhFormfield-6676099924")
+.setText(document.getElementById("nombre7").value);
+
+form.getTextField("dhFormfield-6676099999")
+.setText(document.getElementById("identificacion7").value);
 
     const pdfFinal =
         await pdfDoc.save();
