@@ -26,19 +26,29 @@ async function generarPDF() {
 
   const fields = form.getFields();
 
-  let resultado = "";
+  for (let i = 0; i < fields.length; i++) {
 
-  fields.forEach((field, i) => {
-    resultado +=
-      (i + 1) +
-      " - " +
-      field.constructor.name +
-      " - " +
-      field.getName() +
-      "\n";
-  });
+    try {
+      fields[i].setText("CAMPO " + (i + 1));
+    } catch(e) {}
 
-  alert(resultado);
+  }
+
+  const pdfBytesFinal = await pdfDoc.save();
+
+  const blob = new Blob(
+    [pdfBytesFinal],
+    { type: "application/pdf" }
+  );
+
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+
+  a.href = url;
+  a.download = "prueba.pdf";
+
+  a.click();
 }
 </script>
 
