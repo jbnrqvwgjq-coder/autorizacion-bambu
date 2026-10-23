@@ -11,15 +11,24 @@
 <style>
 body{
   font-family:Arial,sans-serif;
-  max-width:800px;
+  max-width:900px;
   margin:auto;
   padding:20px;
+}
+
+h2,h3{
+  margin-top:20px;
+}
+
+label{
+  display:block;
+  margin-top:8px;
 }
 
 input{
   width:100%;
   padding:10px;
-  margin-bottom:12px;
+  margin-bottom:8px;
   box-sizing:border-box;
 }
 
@@ -32,6 +41,11 @@ button{
   border-radius:5px;
   font-size:18px;
   cursor:pointer;
+  margin-top:20px;
+}
+
+hr{
+  margin:30px 0;
 }
 </style>
 
@@ -50,91 +64,170 @@ button{
 <label>Hasta</label>
 <input id="hasta">
 
-<label>Nombre visitante</label>
-<input id="nombre">
-
-<label>Identificación</label>
-<input id="identificacion">
-
-<label>Parentesco</label>
-<input id="parentesco">
-
-<label>Celular</label>
-<input id="celular">
-
-<label>Mascota</label>
-<input id="mascota">
-
 <label>Placa</label>
 <input id="placa">
+
+<hr>
+
+<h3>Visitante 1</h3>
+
+<label>Nombre</label>
+<input id="nombre1">
+
+<label>Identificación</label>
+<input id="identificacion1">
+
+<label>Parentesco</label>
+<input id="parentesco1">
+
+<label>Celular</label>
+<input id="celular1">
+
+<label>Mascota</label>
+<input id="mascota1">
+
+<hr>
+
+<h3>Visitante 2</h3>
+
+<label>Nombre</label>
+<input id="nombre2">
+
+<label>Identificación</label>
+<input id="identificacion2">
+
+<label>Parentesco</label>
+<input id="parentesco2">
+
+<label>Celular</label>
+<input id="celular2">
+
+<label>Mascota</label>
+<input id="mascota2">
+
+<hr>
+
+<h3>Visitante 3</h3>
+
+<label>Nombre</label>
+<input id="nombre3">
+
+<label>Identificación</label>
+<input id="identificacion3">
+
+<label>Parentesco</label>
+<input id="parentesco3">
+
+<label>Celular</label>
+<input id="celular3">
+
+<label>Mascota</label>
+<input id="mascota3">
 
 <button onclick="generarPDF()">
 Generar PDF
 </button>
 
 <script>
+
 async function generarPDF(){
 
-  const pdfBytes = await fetch("bambu.pdf")
-    .then(r => r.arrayBuffer());
+const pdfBytes =
+await fetch("bambu.pdf")
+.then(r => r.arrayBuffer());
 
-  const pdfDoc =
-    await PDFLib.PDFDocument.load(pdfBytes);
+const pdfDoc =
+await PDFLib.PDFDocument.load(pdfBytes);
 
-  const form = pdfDoc.getForm();
+const form =
+pdfDoc.getForm();
 
-  // FECHA
-  form.getTextField("dhFormfield-6676099507")
-    .setText(document.getElementById("fecha").value);
 
-  // DESDE
-  form.getTextField("dhFormfield-6676099829")
-    .setText(document.getElementById("desde").value);
+// ENCABEZADO
 
-  // HASTA
-  form.getTextField("dhFormfield-6676099872")
-    .setText(document.getElementById("hasta").value);
+form.getTextField("dhFormfield-6676099507")
+.setText(document.getElementById("fecha").value);
 
-  // NOMBRE VISITANTE #1
-  form.getTextField("dhFormfield-6676099881")
-    .setText(document.getElementById("nombre").value);
+form.getTextField("dhFormfield-6676099829")
+.setText(document.getElementById("desde").value);
 
-  // IDENTIFICACION #1
-  form.getTextField("dhFormfield-6676099961")
-    .setText(document.getElementById("identificacion").value);
+form.getTextField("dhFormfield-6676099872")
+.setText(document.getElementById("hasta").value);
 
-  // PARENTESCO #1
-  form.getTextField("dhFormfield-6676100002")
-    .setText(document.getElementById("parentesco").value);
+form.getTextField("dhFormfield-6676100870")
+.setText(document.getElementById("placa").value);
 
-  // CELULAR #1
-  form.getTextField("dhFormfield-6676100201")
-    .setText(document.getElementById("celular").value);
 
-  // MASCOTA #1
-  form.getTextField("dhFormfield-6676100253")
-    .setText(document.getElementById("mascota").value);
+// VISITANTE 1
 
-  // PLACA
-  form.getTextField("dhFormfield-6676100870")
-    .setText(document.getElementById("placa").value);
+form.getTextField("dhFormfield-6676099881")
+.setText(document.getElementById("nombre1").value);
 
-  const pdfFinal = await pdfDoc.save();
+form.getTextField("dhFormfield-6676099961")
+.setText(document.getElementById("identificacion1").value);
 
-  const blob = new Blob(
-    [pdfFinal],
-    { type: "application/pdf" }
-  );
+form.getTextField("dhFormfield-6676100002")
+.setText(document.getElementById("parentesco1").value);
 
-  const url = URL.createObjectURL(blob);
+form.getTextField("dhFormfield-6676100201")
+.setText(document.getElementById("celular1").value);
 
-  const a = document.createElement("a");
+form.getTextField("dhFormfield-6676100253")
+.setText(document.getElementById("mascota1").value);
 
-  a.href = url;
-  a.download = "Autorizacion.pdf";
 
-  a.click();
+// VISITANTE 2
+
+form.getTextField("dhFormfield-6676099893")
+.setText(document.getElementById("nombre2").value);
+
+form.getTextField("dhFormfield-6676099978")
+.setText(document.getElementById("identificacion2").value);
+
+form.getTextField("dhFormfield-6676100007")
+.setText(document.getElementById("parentesco2").value);
+
+form.getTextField("dhFormfield-6676100202")
+.setText(document.getElementById("celular2").value);
+
+
+// VISITANTE 3
+
+form.getTextField("dhFormfield-6676099899")
+.setText(document.getElementById("nombre3").value);
+
+form.getTextField("dhFormfield-6676099981")
+.setText(document.getElementById("identificacion3").value);
+
+form.getTextField("dhFormfield-6676100011")
+.setText(document.getElementById("parentesco3").value);
+
+form.getTextField("dhFormfield-6676100235")
+.setText(document.getElementById("celular3").value);
+
+
+const pdfFinal =
+await pdfDoc.save();
+
+const blob =
+new Blob(
+[pdfFinal],
+{type:"application/pdf"}
+);
+
+const url =
+URL.createObjectURL(blob);
+
+const a =
+document.createElement("a");
+
+a.href = url;
+a.download = "Autorizacion_Bambu.pdf";
+
+a.click();
+
 }
+
 </script>
 
 </body>
