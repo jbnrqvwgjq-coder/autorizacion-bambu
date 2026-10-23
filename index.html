@@ -11,11 +11,11 @@
 <style>
 
 body{
-  font-family: Arial, sans-serif;
-  max-width: 900px;
-  margin: auto;
-  padding: 15px;
-  background: #f5f5f5;
+  font-family:Arial,sans-serif;
+  max-width:900px;
+  margin:auto;
+  padding:15px;
+  background:#f5f5f5;
 }
 
 h2{
@@ -34,7 +34,8 @@ label{
   font-weight:bold;
 }
 
-input{
+input,
+select{
   width:100%;
   padding:14px;
   font-size:16px;
@@ -56,8 +57,8 @@ button{
   cursor:pointer;
 }
 
-button:hover{
-  background:#0055aa;
+hr{
+  margin:25px 0;
 }
 
 </style>
@@ -69,7 +70,7 @@ button:hover{
 <h2>Autorización Hacienda Peñalisa Bambú</h2>
 
 <label>Fecha</label>
-<input id="fecha" value="22/10/2026">
+<input id="fecha">
 
 <label>Desde</label>
 <input id="desde">
@@ -77,20 +78,14 @@ button:hover{
 <label>Hasta</label>
 <input id="hasta">
 
+<label>Vehículo</label>
+<select id="vehiculo">
+  <option value="SI">Sí</option>
+  <option value="NO">No</option>
+</select>
+
 <label>Placa</label>
 <input id="placa">
-
-  <label>Vehículo</label>
-
-<label>
-<input type="radio" name="vehiculo" value="SI" checked>
-Sí
-</label>
-
-<label>
-<input type="radio" name="vehiculo" value="NO">
-No
-</label>
 
 <hr>
 
@@ -155,6 +150,21 @@ Generar PDF
 
 <script>
 
+window.onload = function(){
+
+  const hoy = new Date();
+
+  const fecha =
+    String(hoy.getDate()).padStart(2,'0')
+    + '/'
+    + String(hoy.getMonth()+1).padStart(2,'0')
+    + '/'
+    + hoy.getFullYear();
+
+  document.getElementById('fecha').value = fecha;
+
+};
+
 async function generarPDF(){
 
 const pdfBytes =
@@ -166,14 +176,6 @@ await PDFLib.PDFDocument.load(pdfBytes);
 
 const form =
 pdfDoc.getForm();
-  try {
-  form.getCheckBox("dhFormfield-6676100911").check();
-} catch(e) {}
-
-try {
-  form.getCheckBox("dhFormfield-6676101056").check();
-} catch(e) {}
-
 
 
 // ENCABEZADO
