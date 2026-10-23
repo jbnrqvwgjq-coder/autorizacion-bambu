@@ -3,80 +3,42 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Autorización Bambú</title>
-
-<style>
-body {
-  font-family: Arial, sans-serif;
-  max-width: 800px;
-  margin: auto;
-  padding: 20px;
-}
-
-input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-}
-
-button {
-  width: 100%;
-  padding: 15px;
-  background: #0066cc;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-</style>
+<title>Prueba PDF</title>
 
 <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
-
 </head>
 
 <body>
 
-<h2>Autorización Hacienda Peñalisa Bambú</h2>
-
-<label>Fecha</label>
-<input id="fecha">
-
-<label>Nombre visitante</label>
-<input id="nombre">
-
 <button onclick="generarPDF()">
-Generar PDF
+Ver campos
 </button>
 
 <script>
 async function generarPDF() {
 
-  try {
+  const pdfBytes = await fetch("bambu.pdf")
+    .then(r => r.arrayBuffer());
 
-    const pdfBytes = await fetch("bambu.pdf")
-      .then(r => r.arrayBuffer());
+  const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
 
-    const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
+  const form = pdfDoc.getForm();
 
-    const form = pdfDoc.getForm();
+  const fields = form.getFields();
 
-    const fields = form.getFields();
+  let resultado = "";
 
-    let lista = "";
+  fields.forEach((field, i) => {
+    resultado +=
+      (i + 1) +
+      " - " +
+      field.constructor.name +
+      " - " +
+      field.getName() +
+      "\n";
+  });
 
-    fields.forEach(field => {
-      lista += field.getName() + "\n";
-    });
-
-    alert(lista);
-
-  } catch (error) {
-
-    alert("ERROR:\n\n" + error);
-
-  }
-
+  alert(resultado);
 }
 </script>
 
