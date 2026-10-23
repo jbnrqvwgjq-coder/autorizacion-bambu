@@ -76,15 +76,15 @@ hr{
 
 <div style="text-align:center;margin-bottom:20px;">
     <h1 style="
-        color:#2e7d32;
+        color:#CAA78B;
         margin-bottom:5px;
     ">
         HACIENDA PEÑALISA BAMBÚ
     </h1>
 
     <div style="
-        color:#666;
-        font-size:14px;
+        color:#956B4D;
+        font-size:18px;
     ">
         Generador de Autorizaciones
     </div>
@@ -176,13 +176,6 @@ hr{
 
 <hr>
 
-<h3>Visitante 7</h3>
-
-<label>Nombre</label>
-<input id="nombre7">
-
-<label>Identificación</label>
-<input id="identificacion7">
 
 <button onclick="generarPDF()">
 Generar PDF
@@ -311,13 +304,7 @@ form.getTextField("dhFormfield-6676099994")
 .setText(document.getElementById("identificacion6").value);
 
 
-// VISITANTE 7
 
-form.getTextField("dhFormfield-6676099924")
-.setText(document.getElementById("nombre7").value);
-
-form.getTextField("dhFormfield-6676099999")
-.setText(document.getElementById("identificacion7").value);
 
     const pdfFinal =
         await pdfDoc.save();
